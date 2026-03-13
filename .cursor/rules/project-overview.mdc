@@ -1,0 +1,215 @@
+---
+description: Complete technical overview of webeach-design — purpose, stack, token system, palette rules, CSS variables, scripts, conventions, and release flow. Source of truth for AI assistants.
+alwaysApply: true
+---
+
+# webeach-design — Project Overview
+
+> **Maintenance rule:** This file is the single source of truth for AI assistants.
+> Every time a meaningful change is made to the project — new token group, palette change, new export, changed convention, script update, etc. — this file **must** be updated to reflect it after the task is done.
+
+## What This Is
+
+An npm package of design tokens for the [WebEach](https://webeach.io) services (`@webeach-io/design`). Provides colors, gradients, sizes, and typography in TypeScript + CSS custom properties, with full dark/light mode support.
+
+---
+
+## Stack
+
+| Layer | Technology | Version |
+|---|---|---|
+| Language | TypeScript strict, ESM | ^5.9.3 |
+| Package manager | pnpm ^10, Node >=22.0.0 | |
+| Build | tsup (esbuild-based) | ^8.5.1 |
+| Test | Vitest | ^4.1.0 |
+| Validation | Zod (in tests only) | ^4.3.6 |
+| Linter | oxlint | ^1.55.0 |
+| Formatter | oxfmt | ^0.40.0 |
+| Release | semantic-release | ^25.0.3 |
+
+**Package exports:**
+- `.` → `dist/esm/index.js` (ESM only) + `dist/esm/index.d.ts`
+- `./tokens.css` → `dist/tokens.css`
+
+---
+
+## Directory Structure
+
+```
+src/
+├── index.ts                   # Public API: all exports
+├── constants/
+│   └── common.ts              # MODE_TYPES = ['dark', 'light'] as const
+├── types/
+│   └── common.ts              # HSLValue, ModeTypeKey
+├── tokens/
+│   ├── colors.ts              # DarkModeColor, LightModeColor
+│   ├── gradients.ts           # DarkModeGradient, LightModeGradient
+│   ├── sizes.ts               # Size, BorderSize, Rounding, Spacing
+│   └── typography.ts          # FontFamily, FontSize, FontWeight, LineHeight, Typography
+└── functions/
+    ├── getModeColor.ts        # getModeColor(mode) → DarkModeColor | LightModeColor
+    └── getModeGradient.ts     # getModeGradient(mode) → DarkModeGradient | LightModeGradient
+
+scripts/
+├── generateCss.ts             # Generates dist/tokens.css from tokens
+├── generateAssets.ts          # Generates SVG previews in assets/
+└── functions/
+    ├── makeCssVariablesFile.ts
+    ├── prepareCssVariables.ts
+    ├── prepareCssGradientVariables.ts
+    ├── prepareCssTypographyVariables.ts
+    ├── toCssKeyFormat.ts       # camelCase/keys → kebab-case for CSS
+    ├── makeColoredRectSvgFile.ts
+    └── makeGradientRectSvgFile.ts
+
+assets/                        # 126 SVG previews (auto-generated, committed)
+```
+
+---
+
+## Color System
+
+### Palette Rules
+
+- **9 shades per group**: `100`, `200`, `300`, `400`, `500`, `600`, `700`, `800`, `900`
+- **Direction**: `100` = lightest, `900` = darkest — uniform across both modes (Tailwind-style)
+- **`600` = brand/accent anchor** for all semantic groups (primary600 is the main brand color)
+- Both `DarkModeColor` and `LightModeColor` must have **identical keys**
+
+### Color Groups
+
+| Group | Purpose |
+|---|---|
+| `primary` | Main brand accent |
+| `secondary` | Additional accent (used in gradients) |
+| `neutral` | Grayscale palette |
+| `danger` | Errors and critical states |
+| `warning` | Warnings and alerts |
+| `success` | Success messages and confirmations |
+
+### Dark Mode Note
+
+In `DarkModeColor`, the lighter shades (100–500) are the visually light variants and darker shades (700–900) are visually dark. The shade `500` is interpolated between shades `400` and `600` since the original palette had only 4 lighter steps before the anchor.
+
+### Format Requirements
+
+- All colors: **HSL only** — `hsl(H S% L%)` or `hsl(H S% L% / alpha)`
+- No `hex`, `rgb`, `rgba`, or other formats
+- Type-checked via `satisfies Record<string, HSLValue>`
+
+---
+
+## Gradients
+
+`DarkModeGradient` and `LightModeGradient` each contain 9 gradient entries (`primary100`–`primary900`). Each entry is a tuple `[secondaryNNN, primaryNNN]` from the corresponding color map.
+
+```typescript
+primary600: [DarkModeColor.secondary600, DarkModeColor.primary600]
+```
+
+---
+
+## Sizes
+
+| Object | Keys | Example values |
+|---|---|---|
+| `Size` | `'1x'`…`'32x'` | `4px`…`128px` |
+| `BorderSize` | `thin`, `regular`, `medium`, `bold`, `extraBold` | `1px`…`8px` |
+| `Rounding` | `'1x'`, `'1.5x'`, `'2x'`, `'4x'` | `4px`…`16px` |
+| `Spacing` | `'0.5x'`…`'12x'` | `2px`…`48px` |
+
+All size values must be in **`px` units** only.
+
+---
+
+## Typography
+
+```
+Typography.H1.medium
+Typography.H2.medium
+Typography.H3.{ regular | medium }
+Typography.H4.{ regular | medium }
+Typography.H5.{ regular | medium | bold }
+Typography.Body.extraSmall.{ regular | medium }
+Typography.Body.small.{ regular | medium | bold }
+Typography.Body.medium.{ regular | medium | bold }
+Typography.Code.regular
+```
+
+Fonts: `"Roboto"` (primary), `"Roboto Mono"` (monospace). Font files are **not** included — consumers import from Google Fonts.
+
+---
+
+## CSS Variables Naming
+
+`toCssKeyFormat()` converts camelCase keys to kebab-case: `primary600` → `primary-600`, `1.5x` → `1-5x`.
+
+| Scope | Pattern | Example |
+|---|---|---|
+| Light mode colors | `--lm-color-{group}-{shade}` | `--lm-color-primary-600` |
+| Dark mode colors | `--dm-color-{group}-{shade}` | `--dm-color-neutral-900` |
+| Semantic colors | `--color-{group}-{shade}` | `--color-primary-600` |
+| Light mode gradients | `--lm-gradient-primary-{shade}` | `--lm-gradient-primary-600` |
+| Dark mode gradients | `--dm-gradient-primary-{shade}` | `--dm-gradient-primary-600` |
+| Semantic gradients | `--gradient-primary-{shade}` | `--gradient-primary-600` |
+| Sizes | `--size-{key}` | `--size-4x` |
+| Spacing | `--spacing-{key}` | `--spacing-2x` |
+| Rounding | `--rounding-{key}` | `--rounding-1-5x` |
+| Border sizes | `--border-size-{key}` | `--border-size-thin` |
+| Typography | `--typography-{style}` | `--typography-h1-medium` |
+
+### Mode Switching
+
+Semantic variables (`--color-*`, `--gradient-*`) are set under `[data-ui-mode="dark"]` / `[data-ui-mode="light"]` selectors and reference their mode-specific counterparts via `var(--dm-color-*)`.
+
+```html
+<html data-ui-mode="light"> ... </html>
+```
+
+---
+
+## Scripts
+
+| Command | Description |
+|---|---|
+| `pnpm build` | tsup: ESM + types + auto-runs `generate:css` |
+| `pnpm build:watch` | tsup in watch mode |
+| `pnpm generate:css` | Regenerate `dist/tokens.css` standalone |
+| `pnpm generate:assets` | Regenerate 126 SVG previews in `assets/` |
+| `pnpm test` | Vitest snapshot + Zod validation tests |
+| `pnpm test:update` | `vitest run -u` — regenerate snapshots |
+| `pnpm lint` / `pnpm lint:fix` | oxlint / oxlint --fix |
+| `pnpm fmt` / `pnpm fmt:check` | oxfmt / oxfmt --check |
+| `pnpm typecheck` | `tsc --noEmit` |
+
+> **Important:** After any color or gradient change, run `pnpm generate:assets` and commit the new SVGs. Snapshot tests must also be updated with `pnpm test:update`.
+
+---
+
+## Testing
+
+- **Zod schemas** validate key format (`colorKeySchema`: `/^[a-z]+(100|[2-9]00)$/`) and values (`colorValueSchema`: HSL regex)
+- **Snapshot tests** for all 4 token modules — protect against accidental value changes
+- `DarkModeColor` and `LightModeColor` must have identical keys (enforced by test)
+- `DarkModeGradient` and `LightModeGradient` must have identical keys (enforced by test)
+
+---
+
+## Coding Conventions
+
+- **Key names**: `camelCase` — `primary600`, `secondary900`, `extraRelaxed`
+- **Exports**: all public tokens and types exported from `src/index.ts`
+- **TypeScript**: `satisfies` operator used for token objects (e.g., `satisfies Record<string, HSLValue>`)
+- **Types**: each token object exports `Type`, `Key`, and `Value` types (e.g., `SizeType`, `SizeKey`, `SizeValue`)
+- **Commit convention**: Conventional Commits enforced by commitlint + Husky `commit-msg` hook
+
+---
+
+## Release
+
+- **`semantic-release`** on push to `main` — auto-versions and publishes to npm
+- Branches: `main` (stable) + `next` (prerelease `rc`)
+- CI pipeline: `commitlint` → `lint` (oxlint + oxfmt:check + typecheck) → `test` → `build` → `release`
+- Publish secret env var: `NPM_TOKEN` (was `YARN_NPM_AUTH_TOKEN`)
+- CHANGELOG auto-updated; README tables must be manually updated before releasing color/gradient changes
