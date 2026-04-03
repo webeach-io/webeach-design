@@ -53,7 +53,9 @@ yarn add @webeach-io/design
 
 ## 🎨 Colors
 
-Each color group includes 9 shades (100–900) adapted for both light and dark modes. Shade **600** is the brand/accent anchor:
+Each color group includes 9 shades (100–900) adapted for both light and dark modes. Shade **600** is the brand/accent anchor.
+
+In **light mode**, `100` is the lightest shade and `900` is the darkest. In **dark mode**, the direction is inverted: `100` is the darkest (dark background) and `900` is the lightest (light foreground). This ensures that semantic variables like `--color-neutral-100` always represent the primary background colour regardless of the active mode.
 
 - **Primary** — main brand accent colors
 - **Secondary** — additional accent colors
@@ -67,7 +69,7 @@ Each color group includes 9 shades (100–900) adapted for both light and dark m
 The table below shows the color values for the light mode:
 
 |                                Color                                |     Name      |              JS               |               CSS               |
-| :-----------------------------------------------------------------: | :-----------: | :---------------------------: | :-----------------------------: |
+|:-------------------------------------------------------------------:|:-------------:|:-----------------------------:|:-------------------------------:|
 |  <img alt="" src="./assets/color-lm-neutral-100.svg" width="24px">  |  Neutral 100  |  `LightModeColor.neutral100`  |  `var(--lm-color-neutral-100)`  |
 |  <img alt="" src="./assets/color-lm-neutral-200.svg" width="24px">  |  Neutral 200  |  `LightModeColor.neutral200`  |  `var(--lm-color-neutral-200)`  |
 |  <img alt="" src="./assets/color-lm-neutral-300.svg" width="24px">  |  Neutral 300  |  `LightModeColor.neutral300`  |  `var(--lm-color-neutral-300)`  |
@@ -128,7 +130,7 @@ The table below shows the color values for the light mode:
 The table below shows the color values for the dark mode:
 
 |                                Color                                |     Name      |              JS              |               CSS               |
-| :-----------------------------------------------------------------: | :-----------: | :--------------------------: | :-----------------------------: |
+|:-------------------------------------------------------------------:|:-------------:|:----------------------------:|:-------------------------------:|
 |  <img alt="" src="./assets/color-dm-neutral-100.svg" width="24px">  |  Neutral 100  |  `DarkModeColor.neutral100`  |  `var(--dm-color-neutral-100)`  |
 |  <img alt="" src="./assets/color-dm-neutral-200.svg" width="24px">  |  Neutral 200  |  `DarkModeColor.neutral200`  |  `var(--dm-color-neutral-200)`  |
 |  <img alt="" src="./assets/color-dm-neutral-300.svg" width="24px">  |  Neutral 300  |  `DarkModeColor.neutral300`  |  `var(--dm-color-neutral-300)`  |
@@ -189,7 +191,7 @@ The table below shows the color values for the dark mode:
 The table below shows color values that adapt to both light and dark modes:
 
 |                             Light Mode                              |                              Dark Mode                              |     Name      |             CSS              |
-| :-----------------------------------------------------------------: | :-----------------------------------------------------------------: | :-----------: | :--------------------------: |
+|:-------------------------------------------------------------------:|:-------------------------------------------------------------------:|:-------------:|:----------------------------:|
 |  <img alt="" src="./assets/color-lm-neutral-100.svg" width="24px">  |  <img alt="" src="./assets/color-dm-neutral-100.svg" width="24px">  |  Neutral 100  |  `var(--color-neutral-100)`  |
 |  <img alt="" src="./assets/color-lm-neutral-200.svg" width="24px">  |  <img alt="" src="./assets/color-dm-neutral-200.svg" width="24px">  |  Neutral 200  |  `var(--color-neutral-200)`  |
 |  <img alt="" src="./assets/color-lm-neutral-300.svg" width="24px">  |  <img alt="" src="./assets/color-dm-neutral-300.svg" width="24px">  |  Neutral 300  |  `var(--color-neutral-300)`  |
@@ -256,7 +258,7 @@ Currently, there is one gradient variation, available in 9 shades (100–900) fo
 The table below shows the gradients for the light mode:
 
 |                                Color                                 |    Name     |               JS               |               CSS                |
-| :------------------------------------------------------------------: | :---------: | :----------------------------: | :------------------------------: |
+|:--------------------------------------------------------------------:|:-----------:|:------------------------------:|:--------------------------------:|
 | <img alt="" src="./assets/gradient-lm-primary-100.svg" width="24px"> | Primary 100 | `LightModeGradient.primary100` | `var(--lm-gradient-primary-100)` |
 | <img alt="" src="./assets/gradient-lm-primary-200.svg" width="24px"> | Primary 200 | `LightModeGradient.primary200` | `var(--lm-gradient-primary-200)` |
 | <img alt="" src="./assets/gradient-lm-primary-300.svg" width="24px"> | Primary 300 | `LightModeGradient.primary300` | `var(--lm-gradient-primary-300)` |
@@ -272,7 +274,7 @@ The table below shows the gradients for the light mode:
 The table below shows the gradients for the dark mode:
 
 |                                Color                                 |    Name     |              JS               |               CSS                |
-| :------------------------------------------------------------------: | :---------: | :---------------------------: | :------------------------------: |
+|:--------------------------------------------------------------------:|:-----------:|:-----------------------------:|:--------------------------------:|
 | <img alt="" src="./assets/gradient-dm-primary-100.svg" width="24px"> | Primary 100 | `DarkModeGradient.primary100` | `var(--dm-gradient-primary-100)` |
 | <img alt="" src="./assets/gradient-dm-primary-200.svg" width="24px"> | Primary 200 | `DarkModeGradient.primary200` | `var(--dm-gradient-primary-200)` |
 | <img alt="" src="./assets/gradient-dm-primary-300.svg" width="24px"> | Primary 300 | `DarkModeGradient.primary300` | `var(--dm-gradient-primary-300)` |
@@ -288,7 +290,7 @@ The table below shows the gradients for the dark mode:
 The table below shows gradients that adapt to both light and dark modes.
 
 |                              Light Mode                              |                              Dark Mode                               |    Name     |              CSS              |
-| :------------------------------------------------------------------: | :------------------------------------------------------------------: | :---------: | :---------------------------: |
+|:--------------------------------------------------------------------:|:--------------------------------------------------------------------:|:-----------:|:-----------------------------:|
 | <img alt="" src="./assets/gradient-lm-primary-100.svg" width="24px"> | <img alt="" src="./assets/gradient-dm-primary-100.svg" width="24px"> | Primary 100 | `var(--gradient-primary-100)` |
 | <img alt="" src="./assets/gradient-lm-primary-200.svg" width="24px"> | <img alt="" src="./assets/gradient-dm-primary-200.svg" width="24px"> | Primary 200 | `var(--gradient-primary-200)` |
 | <img alt="" src="./assets/gradient-lm-primary-300.svg" width="24px"> | <img alt="" src="./assets/gradient-dm-primary-300.svg" width="24px"> | Primary 300 | `var(--gradient-primary-300)` |
@@ -315,7 +317,7 @@ The design tokens package also includes size groups, consisting of both base and
 Below is a table of all available base sizes:
 
 | Name |  Value  |       JS       |        CSS         |
-| :--: | :-----: | :------------: | :----------------: |
+|:----:|:-------:|:--------------:|:------------------:|
 |  1x  |  `4px`  |  `Size['1x']`  |  `var(--size-1x)`  |
 |  2x  |  `8px`  |  `Size['2x']`  |  `var(--size-2x)`  |
 |  3x  | `12px`  |  `Size['3x']`  |  `var(--size-3x)`  |
@@ -336,7 +338,7 @@ Below is a table of all available base sizes:
 The table below shows all available spacing sizes.
 
 | Name | Value  |        JS         |          CSS          |
-| :--: | :----: | :---------------: | :-------------------: |
+|:----:|:------:|:-----------------:|:---------------------:|
 | 0.5x | `2px`  | `Spacing['0.5x']` | `var(--spacing-0-5x)` |
 |  1x  | `4px`  |  `Spacing['1x']`  |  `var(--spacing-1x)`  |
 |  2x  | `8px`  |  `Spacing['2x']`  |  `var(--spacing-2x)`  |
@@ -354,7 +356,7 @@ The table below shows all available spacing sizes.
 Ниже приведена таблица с размерами сгруглений
 
 | Name | Value  |         JS         |          CSS           |
-| :--: | :----: | :----------------: | :--------------------: |
+|:----:|:------:|:------------------:|:----------------------:|
 |  1x  | `4px`  |  `Rounding['1x']`  |  `var(--rounding-1x)`  |
 | 1.5x | `6px`  | `Rounding['1.5x']` | `var(--rounding-1-5x)` |
 |  2x  | `8px`  |  `Rounding['2x']`  |  `var(--rounding-2x)`  |
@@ -365,7 +367,7 @@ The table below shows all available spacing sizes.
 The table below shows all available border thickness values.
 
 |    Name    | Value |           JS           |               CSS               |
-| :--------: | :---: | :--------------------: | :-----------------------------: |
+|:----------:|:-----:|:----------------------:|:-------------------------------:|
 |    Thin    | `1px` |   `BorderSize.thin`    |    `var(--border-size-thin)`    |
 |  Regular   | `2px` |  `BorderSize.regular`  |  `var(--border-size-regilar)`   |
 |   Medium   | `4px` |  `BorderSize.medium`   |   `var(--border-size-medium)`   |
@@ -405,7 +407,7 @@ Without this, all `rem`-based typography values will render at incorrect sizes. 
 Font stacks are exposed as separate CSS variables, which allows consumers to override them independently of the individual typography tokens:
 
 | Variant     | CSS Variable                    | Font Stack                                                                       |
-| :---------- | :------------------------------ | :------------------------------------------------------------------------------- |
+|:------------|:--------------------------------|:---------------------------------------------------------------------------------|
 | `primary`   | `var(--font-variant-primary)`   | `"Roboto", -apple-system, BlinkMacSystemFont, "Segoe UI", Arial, sans-serif`     |
 | `monospace` | `var(--font-variant-monospace)` | `"Roboto Mono", "SFMono-Regular", Consolas, "Liberation Mono", Menlo, monospace` |
 
@@ -416,7 +418,7 @@ Font size values use `rem` units. Line height values are unitless ratios.
 Below is a table of all available typography styles:
 
 | Name                        | Font Variant | Font Size | Font Weight | Line Height |                  JS                  |                     CSS                      |
-| :-------------------------- | :----------: | :-------: | :---------: | :---------: | :----------------------------------: | :------------------------------------------: |
+|:----------------------------|:------------:|:---------:|:-----------:|:-----------:|:------------------------------------:|:--------------------------------------------:|
 | H1 / medium                 |  `primary`   | `3.2rem`  |    `500`    |   `1.25`    |        `Typography.H1.medium`        |        `var(--typography-h1-medium)`         |
 | H2 / medium                 |  `primary`   | `2.4rem`  |    `500`    |   `1.25`    |        `Typography.H2.medium`        |        `var(--typography-h2-medium)`         |
 | H3 / regular                |  `primary`   |  `2rem`   |    `400`    |    `1.2`    |       `Typography.H3.regular`        |        `var(--typography-h3-regular)`        |

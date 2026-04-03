@@ -73,7 +73,8 @@ assets/                        # 126 SVG previews (auto-generated, committed)
 ### Palette Rules
 
 - **9 shades per group**: `100`, `200`, `300`, `400`, `500`, `600`, `700`, `800`, `900`
-- **Direction**: `100` = lightest, `900` = darkest — uniform across both modes (Tailwind-style)
+- **Direction in `LightModeColor`**: `100` = lightest, `900` = darkest (Tailwind-style)
+- **Direction in `DarkModeColor`**: `100` = darkest, `900` = lightest (inverted, so semantic `--color-*` variables behave correctly in dark mode — `neutral-100` is the dark background, `neutral-900` is the light foreground)
 - **`600` = brand/accent anchor** for all semantic groups (primary600 is the main brand color)
 - Both `DarkModeColor` and `LightModeColor` must have **identical keys**
 
@@ -87,10 +88,6 @@ assets/                        # 126 SVG previews (auto-generated, committed)
 | `danger` | Errors and critical states |
 | `warning` | Warnings and alerts |
 | `success` | Success messages and confirmations |
-
-### Dark Mode Note
-
-In `DarkModeColor`, the lighter shades (100–500) are the visually light variants and darker shades (700–900) are visually dark. The shade `500` is interpolated between shades `400` and `600` since the original palette had only 4 lighter steps before the anchor.
 
 ### Format Requirements
 
