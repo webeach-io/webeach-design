@@ -1,7 +1,7 @@
 import { z } from 'zod';
 
 import { fontSizeKeySchema } from './fontSizeKeySchema';
-import { sizeValueSchema } from './sizeValueSchema';
+import { fontSizeValueSchema } from './fontSizeValueSchema';
 
 /**
  * Zod schema for validating a font size mapping.
@@ -11,29 +11,29 @@ import { sizeValueSchema } from './sizeValueSchema';
  *   - The key is a **font size key** (`fontSizeKeySchema`), one of:
  *     - `"small"`, `"medium"`, `"large"`.
  *     - `"extraSmall"`, `"extraLarge"`, `"extraExtraSmall"`, `"extraExtraLarge"`, etc.
- *   - The value is a **size value** (`sizeValueSchema`), which must be in `"Npx"` format (e.g., `"12px"`, `"16px"`).
+ *   - The value is a **font size value** (`fontSizeValueSchema`), which must be in `"Nrem"` format (e.g., `"1.2rem"`, `"1.6rem"`).
  *
  * @example
  * fontSizeMapSchema.parse({
- *   small: "12px",
- *   medium: "14px",
- *   large: "16px",
- *   extraSmall: "10px",
- *   extraExtraLarge: "24px",
+ *   extraSmall: "1.2rem",
+ *   small: "1.4rem",
+ *   medium: "1.6rem",
+ *   large: "1.8rem",
+ *   extraLarge: "2rem",
+ *   extraExtraLarge: "2.4rem",
+ *   extraExtraExtraLarge: "3.2rem",
  * }); // ✅ Valid
  *
  * fontSizeMapSchema.parse({
- *   extraMedium: "15px", // ❌ Invalid (medium cannot have "extra")
- *   large: "16rem", // ❌ Invalid (must be in px)
- *   small: "tiny", // ❌ Invalid (not a numeric px value)
+ *   extraMedium: "1.5rem", // ❌ Invalid (medium cannot have "extra")
+ *   large: "16px",         // ❌ Invalid (must be in rem)
+ *   small: "tiny",         // ❌ Invalid (not a numeric rem value)
  * }); // ❌ Invalid values
  *
  * @throws ZodError if:
  * - Any key is not a valid `fontSizeKeySchema` value.
- * - Any value is not a valid `sizeValueSchema` (`Npx` format).
+ * - Any value is not a valid `fontSizeValueSchema` (`Nrem` format).
  */
 export const fontSizeMapSchema = z
-  .record(fontSizeKeySchema, sizeValueSchema)
-  .describe(
-    'Mapping of font sizes with predefined keys and pixel-based values.',
-  );
+  .record(fontSizeKeySchema, fontSizeValueSchema)
+  .describe('Mapping of font sizes with predefined keys and rem-based values.');

@@ -386,28 +386,55 @@ Available groups:
 
 ⚠️ Note: Font files are not included in this package. You are responsible for importing fonts manually in your project, for example via Google Fonts.
 
+### Root Font Size Requirement
+
+Font sizes in this package use `rem` units scaled to a **10px base**: `1rem = 10px`. This means your project **must** set the following in its global CSS:
+
+```css
+:root {
+  font-size: 62.5%; /* 1rem = 10px (62.5% of the browser default 16px) */
+}
+```
+
+Without this, all `rem`-based typography values will render at incorrect sizes. For example, `1.6rem` is intended to render as `16px`, but without the root override it would compute to `25.6px` (1.6 × 16px).
+
+> **Why 62.5%?** Most browsers default to `font-size: 16px`. Setting `62.5%` brings it down to `10px`, which makes rem arithmetic straightforward: `1.6rem → 16px`, `1.2rem → 12px`, `3.2rem → 32px`, etc.
+
+### Font Families
+
+Font stacks are exposed as separate CSS variables, which allows consumers to override them independently of the individual typography tokens:
+
+| Variant     | CSS Variable                    | Font Stack                                                                       |
+| :---------- | :------------------------------ | :------------------------------------------------------------------------------- |
+| `primary`   | `var(--font-variant-primary)`   | `"Roboto", -apple-system, BlinkMacSystemFont, "Segoe UI", Arial, sans-serif`     |
+| `monospace` | `var(--font-variant-monospace)` | `"Roboto Mono", "SFMono-Regular", Consolas, "Liberation Mono", Menlo, monospace` |
+
+Font size values use `rem` units. Line height values are unitless ratios.
+
+### Typography Styles
+
 Below is a table of all available typography styles:
 
-| Name                        |  Font Family  | Font Size | Font Weight | Line Height |                  JS                  |                     CSS                      |
-| :-------------------------- | :-----------: | :-------: | :---------: | :---------: | :----------------------------------: | :------------------------------------------: |
-| H1 / medium                 |   `Roboto`    |  `32px`   |    `500`    |   `40px`    |        `Typography.H1.medium`        |        `var(--typography-h1-medium)`         |
-| H2 / medium                 |   `Roboto`    |  `24px`   |    `500`    |   `30px`    |        `Typography.H2.medium`        |        `var(--typography-h2-medium)`         |
-| H3 / regular                |   `Roboto`    |  `20px`   |    `400`    |   `24px`    |       `Typography.H3.regular`        |        `var(--typography-h3-regular)`        |
-| H3 / medium                 |   `Roboto`    |  `20px`   |    `500`    |   `24px`    |        `Typography.H3.medium`        |        `var(--typography-h3-medium)`         |
-| H4 / regular                |   `Roboto`    |  `18px`   |    `400`    |   `24px`    |       `Typography.H4.regular`        |        `var(--typography-h4-regular)`        |
-| H4 / medium                 |   `Roboto`    |  `18px`   |    `500`    |   `24px`    |        `Typography.H4.medium`        |        `var(--typography-h4-medium)`         |
-| H5 / regular                |   `Roboto`    |  `16px`   |    `400`    |   `24px`    |       `Typography.H5.regular`        |        `var(--typography-h5-regular)`        |
-| H5 / medium                 |   `Roboto`    |  `16px`   |    `500`    |   `24px`    |        `Typography.H5.medium`        |        `var(--typography-h5-medium)`         |
-| H5 / bold                   |   `Roboto`    |  `16px`   |    `700`    |   `24px`    |         `Typography.H5.bold`         |         `var(--typography-h5-bold)`          |
-| Body / extraSmall / regular |   `Roboto`    |  `12px`   |    `400`    |   `16px`    | `Typography.Body.extraSmall.regular` | `var(--typography-body-extra-small-regular)` |
-| Body / extraSmall / medium  |   `Roboto`    |  `12px`   |    `500`    |   `16px`    | `Typography.Body.extraSmall.medium`  | `var(--typography-body-extra-small-medium)`  |
-| Body / small / regular      |   `Roboto`    |  `14px`   |    `400`    |   `22px`    |   `Typography.Body.small.regular`    |    `var(--typography-body-small-regular)`    |
-| Body / small / medium       |   `Roboto`    |  `14px`   |    `500`    |   `22px`    |    `Typography.Body.small.medium`    |    `var(--typography-body-small-medium)`     |
-| Body / small / bold         |   `Roboto`    |  `14px`   |    `700`    |   `22px`    |     `Typography.Body.small.bold`     |     `var(--typography-body-small-bold)`      |
-| Body / medium / regular     |   `Roboto`    |  `16px`   |    `400`    |   `24px`    |   `Typography.Body.medium.regular`   |   `var(--typography-body-medium-regular)`    |
-| Body / medium / medium      |   `Roboto`    |  `16px`   |    `500`    |   `24px`    |   `Typography.Body.medium.medium`    |    `var(--typography-body-medium-medium)`    |
-| Body / medium / bold        |   `Roboto`    |  `16px`   |    `700`    |   `24px`    |    `Typography.Body.medium.bold`     |     `var(--typography-body-medium-bold)`     |
-| Code / regular              | `Roboto Mono` |  `14px`   |    `400`    |   `20px`    |      `Typography.Code.regular`       |       `var(--typography-code-regular)`       |
+| Name                        | Font Variant | Font Size | Font Weight | Line Height |                  JS                  |                     CSS                      |
+| :-------------------------- | :----------: | :-------: | :---------: | :---------: | :----------------------------------: | :------------------------------------------: |
+| H1 / medium                 |  `primary`   | `3.2rem`  |    `500`    |   `1.25`    |        `Typography.H1.medium`        |        `var(--typography-h1-medium)`         |
+| H2 / medium                 |  `primary`   | `2.4rem`  |    `500`    |   `1.25`    |        `Typography.H2.medium`        |        `var(--typography-h2-medium)`         |
+| H3 / regular                |  `primary`   |  `2rem`   |    `400`    |    `1.2`    |       `Typography.H3.regular`        |        `var(--typography-h3-regular)`        |
+| H3 / medium                 |  `primary`   |  `2rem`   |    `500`    |    `1.2`    |        `Typography.H3.medium`        |        `var(--typography-h3-medium)`         |
+| H4 / regular                |  `primary`   | `1.8rem`  |    `400`    |  `1.33333`  |       `Typography.H4.regular`        |        `var(--typography-h4-regular)`        |
+| H4 / medium                 |  `primary`   | `1.8rem`  |    `500`    |  `1.33333`  |        `Typography.H4.medium`        |        `var(--typography-h4-medium)`         |
+| H5 / regular                |  `primary`   | `1.6rem`  |    `400`    |    `1.5`    |       `Typography.H5.regular`        |        `var(--typography-h5-regular)`        |
+| H5 / medium                 |  `primary`   | `1.6rem`  |    `500`    |    `1.5`    |        `Typography.H5.medium`        |        `var(--typography-h5-medium)`         |
+| H5 / bold                   |  `primary`   | `1.6rem`  |    `700`    |    `1.5`    |         `Typography.H5.bold`         |         `var(--typography-h5-bold)`          |
+| Body / extraSmall / regular |  `primary`   | `1.2rem`  |    `400`    |    `1.5`    | `Typography.Body.extraSmall.regular` | `var(--typography-body-extra-small-regular)` |
+| Body / extraSmall / medium  |  `primary`   | `1.2rem`  |    `500`    |    `1.5`    | `Typography.Body.extraSmall.medium`  | `var(--typography-body-extra-small-medium)`  |
+| Body / small / regular      |  `primary`   | `1.4rem`  |    `400`    |  `1.28571`  |   `Typography.Body.small.regular`    |    `var(--typography-body-small-regular)`    |
+| Body / small / medium       |  `primary`   | `1.4rem`  |    `500`    |  `1.28571`  |    `Typography.Body.small.medium`    |    `var(--typography-body-small-medium)`     |
+| Body / small / bold         |  `primary`   | `1.4rem`  |    `700`    |  `1.28571`  |     `Typography.Body.small.bold`     |     `var(--typography-body-small-bold)`      |
+| Body / medium / regular     |  `primary`   | `1.6rem`  |    `400`    |    `1.5`    |   `Typography.Body.medium.regular`   |   `var(--typography-body-medium-regular)`    |
+| Body / medium / medium      |  `primary`   | `1.6rem`  |    `500`    |    `1.5`    |   `Typography.Body.medium.medium`    |    `var(--typography-body-medium-medium)`    |
+| Body / medium / bold        |  `primary`   | `1.6rem`  |    `700`    |    `1.5`    |    `Typography.Body.medium.bold`     |     `var(--typography-body-medium-bold)`     |
+| Code / regular              | `monospace`  | `1.4rem`  |    `400`    |  `1.42857`  |      `Typography.Code.regular`       |       `var(--typography-code-regular)`       |
 
 ---
 
@@ -544,7 +571,16 @@ import type {
   SpacingType,
   SpacingValue,
   TypographyType,
-} from '@wrs/design';
+} from '@webeach-io/design';
+```
+
+You can also access the font family map at runtime (for example, to override font stacks):
+
+```ts
+import { TypographyFontFamilyMap } from '@webeach-io/design';
+
+console.log(TypographyFontFamilyMap.primary);
+// '"Roboto", -apple-system, BlinkMacSystemFont, "Segoe UI", Arial, sans-serif'
 ```
 
 These types help you maintain type safety when working with token keys or token maps in your own components, utilities, or design tooling.
@@ -590,9 +626,16 @@ All tokens are validated during the build process. Below are the basic format re
 - **Colors** must use the `HSL` format
   - Example: `hsl(301 53% 55%)`
   - `hex`, `rgb`, `rgba`, and other formats are **not allowed**
-- **Sizes** (e.g., `Size`, `Spacing`, `Rounding`) must be in `px` units
+- **Sizes** (e.g., `Size`, `Spacing`, `Rounding`, `BorderSize`) must be in `px` units
   - Example: `16px`, `24px`
   - `em`, `rem`, `%`, `auto`, `inherit`, and other units are **not allowed**
+- **Font sizes** (`FontSize`) must be in `rem` units
+  - Example: `1.2rem`, `1.6rem`
+  - `px`, `em`, `%`, and other units are **not allowed**
+- **Line heights** (`LineHeight`) must be unitless numeric ratios
+  - Example: `1.2`, `1.5`
+  - String values with units are **not allowed**
+- **Font family** (`fontFamily` in `Typography`) must be a variant key (`"primary"` or `"monospace"`) — not a raw font stack string
 - **All values** must be explicitly defined — empty strings are **not allowed**
 
 If any token does not meet these requirements, the build will fail with a console error.

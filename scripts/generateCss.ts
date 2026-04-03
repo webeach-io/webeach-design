@@ -11,10 +11,12 @@ import {
   Size,
   Spacing,
   Typography,
+  TypographyFontFamilyMap,
 } from '../src';
 import { MODE_TYPES } from '../src/constants/common';
 import { makeCssVariablesFile } from './functions/makeCssVariablesFile';
 import { prepareCssGradientVariables } from './functions/prepareCssGradientVariables';
+import { prepareCssTypographyFontFamilyVariables } from './functions/prepareCssTypographyFontFamilyVariables';
 import { prepareCssTypographyVariables } from './functions/prepareCssTypographyVariables';
 import { prepareCssVariables } from './functions/prepareCssVariables';
 
@@ -77,32 +79,46 @@ async function generateCss() {
           colorKeyPrefix: `${modeTypeShortAliasMap.light}-color`,
         }),
 
+        // Generate CSS variant for font family variables
+        ...prepareCssTypographyFontFamilyVariables(TypographyFontFamilyMap, {
+          keyPrefix: 'font-variant',
+        }),
+
         // Generate CSS variables for typography
         ...prepareCssTypographyVariables(Typography.H1, {
+          fontFamilyVariantKeyPrefix: 'font-variant',
           keyPrefix: 'typography-h1',
         }),
         ...prepareCssTypographyVariables(Typography.H2, {
+          fontFamilyVariantKeyPrefix: 'font-variant',
           keyPrefix: 'typography-h2',
         }),
         ...prepareCssTypographyVariables(Typography.H3, {
+          fontFamilyVariantKeyPrefix: 'font-variant',
           keyPrefix: 'typography-h3',
         }),
         ...prepareCssTypographyVariables(Typography.H4, {
+          fontFamilyVariantKeyPrefix: 'font-variant',
           keyPrefix: 'typography-h4',
         }),
         ...prepareCssTypographyVariables(Typography.H5, {
+          fontFamilyVariantKeyPrefix: 'font-variant',
           keyPrefix: 'typography-h5',
         }),
         ...prepareCssTypographyVariables(Typography.Body.extraSmall, {
+          fontFamilyVariantKeyPrefix: 'font-variant',
           keyPrefix: 'typography-body-extra-small',
         }),
         ...prepareCssTypographyVariables(Typography.Body.small, {
+          fontFamilyVariantKeyPrefix: 'font-variant',
           keyPrefix: 'typography-body-small',
         }),
         ...prepareCssTypographyVariables(Typography.Body.medium, {
+          fontFamilyVariantKeyPrefix: 'font-variant',
           keyPrefix: 'typography-body-medium',
         }),
         ...prepareCssTypographyVariables(Typography.Code, {
+          fontFamilyVariantKeyPrefix: 'font-variant',
           keyPrefix: 'typography-code',
         }),
       },

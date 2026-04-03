@@ -5,7 +5,10 @@ export { DarkModeColor, LightModeColor } from './tokens/colors';
 export { DarkModeGradient, LightModeGradient } from './tokens/gradients';
 export { BorderSize, Rounding, Size, Spacing } from './tokens/sizes';
 
-export { Typography } from './tokens/typography';
+export {
+  FontFamily as TypographyFontFamilyMap,
+  Typography,
+} from './tokens/typography';
 
 export type { ColorKey } from './tokens/colors';
 

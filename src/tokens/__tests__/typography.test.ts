@@ -37,7 +37,7 @@ describe('Typography validation', () => {
   });
 
   test('Snapshot FontSize', () => {
-    expect(FontFamily).toMatchSnapshot();
+    expect(FontSize).toMatchSnapshot();
   });
 
   test('Snapshot FontWeight', () => {

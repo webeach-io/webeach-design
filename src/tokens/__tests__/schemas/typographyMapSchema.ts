@@ -1,40 +1,42 @@
 import { z } from 'zod';
 
 import { fontSizeKeySchema } from './fontSizeKeySchema';
+import { fontSizeValueSchema } from './fontSizeValueSchema';
 import { fontWeightKeySchema } from './fontWeightKeySchema';
 import { fontWeightValueSchema } from './fontWeightValueSchema';
-import { sizeValueSchema } from './sizeValueSchema';
 
 /**
  * Zod schema for font style definition.
  *
  * This schema ensures that:
- * - `fontFamily` is a non-empty string.
- * - `fontSize` is a valid size value (`12px`, `16px`, etc.).
+ * - `fontFamily` is one of the predefined font family variants: `"primary"` or `"monospace"`.
+ * - `fontSize` is a valid rem value (e.g., `"1.2rem"`, `"1.6rem"`).
  * - `fontWeight` is a number between `100` and `900` (multiple of `100`).
+ * - `lineHeight` is a positive unitless number ratio (e.g., `1.2`, `1.5`).
  *
  * @example
  * fontStyleSchema.parse({
- *   fontFamily: "Roboto",
- *   fontSize: "16px",
+ *   fontFamily: "primary",
+ *   fontSize: "1.6rem",
  *   fontWeight: 400,
- *   lineHeight: "24px",
+ *   lineHeight: 1.5,
  * }); // ✅ Valid
  *
  * fontStyleSchema.parse({
- *   fontFamily: "",
- *   fontSize: "16rem", // ❌ Invalid (only px allowed)
- *   fontWeight: 450,   // ❌ Invalid (not a multiple of 100)
+ *   fontFamily: "Roboto", // ❌ Invalid (must be "primary" or "monospace")
+ *   fontSize: "16px",     // ❌ Invalid (only rem allowed)
+ *   fontWeight: 450,      // ❌ Invalid (not a multiple of 100)
+ *   lineHeight: "24px",   // ❌ Invalid (must be a number)
  * }); // ❌ Throws ZodError
  *
  * @throws ZodError if any property is invalid.
  */
 const fontStyleSchema = z
   .object({
-    fontFamily: z.string().nonempty(),
-    fontSize: sizeValueSchema,
+    fontFamily: z.enum(['primary', 'monospace']),
+    fontSize: fontSizeValueSchema,
     fontWeight: fontWeightValueSchema,
-    lineHeight: sizeValueSchema,
+    lineHeight: z.number().positive(),
   })
   .describe('Font style definition for typography tokens.');
 

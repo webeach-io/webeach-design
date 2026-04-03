@@ -1,21 +1,12 @@
+import { TypographyMapByWeight } from '../../src/types/typography';
 import { toCssKeyFormat } from './toCssKeyFormat';
-
-type FontObject = Record<string, FontProperties>;
-
-/**
- * Font properties describing a single typography style.
- */
-interface FontProperties {
-  fontFamily: string;
-  fontSize: string;
-  fontWeight: number;
-  lineHeight: string;
-}
 
 /**
  * Options for generating CSS variables.
  */
 interface Options {
+  fontFamilyVariantKeyPrefix: string;
+
   /**
    * Optional prefix to prepend to each CSS variable key.
    * @example "typography"
@@ -24,47 +15,57 @@ interface Options {
 }
 
 /**
- * Generates a record of CSS variables from a font object.
+ * Generates a record of CSS variables from a typography weight map.
  *
  * Each value will be a valid CSS font shorthand in the format:
- * `"{font-weight} {font-size}/{line-height} {font-family}"`
+ * `"{font-weight} {font-size}/{line-height} var(--{fontFamilyVariantKeyPrefix}-{font-family-variant})"`
  *
- * @param fontObject - A map of keys to font definitions (family, size, weight, line height)
- * @param options - Optional settings, such as a `keyPrefix` for variable names
- * @returns An object of CSS variable definitions ready to be used in `font: var(--...)`
+ * The font family is referenced as a CSS variable rather than inlined, allowing consumers
+ * to override font stacks via the corresponding `--font-variant-*` custom properties.
+ *
+ * @param typographyObject - A map of weight keys to font definitions (family variant, size, weight, line height)
+ * @param options - Required settings: `fontFamilyVariantKeyPrefix` for the font-variant variable prefix,
+ *   and optional `keyPrefix` for the output variable names
+ * @returns An object of CSS variable definitions ready to be used with `font: var(--...)`
  *
  * @example
  * prepareCssTypographyVariables({
  *   medium: {
- *     fontFamily: 'Roboto',
- *     fontSize: '32px',
+ *     fontFamily: 'primary',
+ *     fontSize: '3.2rem',
  *     fontWeight: 500,
- *     lineHeight: '40px',
+ *     lineHeight: 1.25,
  *   }
- * }, { keyPrefix: 'typography-h1' })
+ * }, { fontFamilyVariantKeyPrefix: 'font-variant', keyPrefix: 'typography-h1' })
  *
  * // Returns:
  * // {
- * //   'typography-h1-medium': '500 32px/40px Roboto'
+ * //   'typography-h1-medium': '500 3.2rem/1.25 var(--font-variant-primary)'
  * // }
  */
 export function prepareCssTypographyVariables(
-  fontObject: FontObject,
-  options: Options = {},
+  typographyObject: TypographyMapByWeight,
+  options: Options,
 ) {
-  const { keyPrefix = '' } = options;
+  const { fontFamilyVariantKeyPrefix, keyPrefix = '' } = options;
 
   return Object.fromEntries(
-    Object.entries(fontObject).map(([key, fontProperties]) => {
-      const { fontFamily, fontSize, fontWeight, lineHeight } = fontProperties;
+    Object.entries(typographyObject).map(([key, fontProperties]) => {
+      const {
+        fontFamily: fontFamilyVariant,
+        fontSize,
+        fontWeight,
+        lineHeight,
+      } = fontProperties;
+
+      const fontFamilyVariantFormatted = toCssKeyFormat(fontFamilyVariant);
+      const fontFamilyVariantWithPrefix = `${fontFamilyVariantKeyPrefix}-${fontFamilyVariantFormatted}`;
 
       const keyFormatted = toCssKeyFormat(key);
-
-      // Convert key to kebab-case and apply prefix if specified
       const finalKey =
         keyPrefix !== '' ? `${keyPrefix}-${keyFormatted}` : keyFormatted;
 
-      const finalValue = `${fontWeight} ${fontSize}/${lineHeight} ${fontFamily}`;
+      const finalValue = `${fontWeight} ${fontSize}/${lineHeight} var(--${fontFamilyVariantWithPrefix})`;
 
       return [finalKey, finalValue] as const;
     }),

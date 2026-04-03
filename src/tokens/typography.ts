@@ -1,180 +1,172 @@
+import {
+  FontFamilyVariant,
+  FontLineHeightKey,
+  FontSizeKey,
+  FontWeightKey,
+} from '../types/font';
+import { TypographyMap } from '../types/typography';
+
 export const FontFamily = {
-  primary: '"Roboto", sans-serif',
-  monospace: '"Roboto Mono", monospace',
-} as const;
+  primary:
+    '"Roboto", -apple-system, BlinkMacSystemFont, "Segoe UI", Arial, sans-serif',
+  monospace:
+    '"Roboto Mono", "SFMono-Regular", Consolas, "Liberation Mono", Menlo, monospace',
+} as const satisfies Readonly<Record<FontFamilyVariant, string>>;
 
 export const FontSize = {
-  extraSmall: '12px',
-  small: '14px',
-  medium: '16px',
-  large: '18px',
-  extraLarge: '20px',
-  extraExtraLarge: '24px',
-  extraExtraExtraLarge: '32px',
-} as const;
+  extraSmall: '1.2rem', // 20px
+  small: '1.4rem', // 14px
+  medium: '1.6rem', // 16px
+  large: '1.8rem', // 18px
+  extraLarge: '2rem', // 20px
+  extraExtraLarge: '2.4rem', // 24px
+  extraExtraExtraLarge: '3.2rem', // 32px
+} as const satisfies Readonly<Record<FontSizeKey, `${number}rem`>>;
 
 export const FontWeight = {
   regular: 400,
   medium: 500,
   bold: 700,
-} as const;
+} as const satisfies Readonly<Record<FontWeightKey, number>>;
 
 export const LineHeight = {
-  compact: '16px',
-  tight: '20px',
-  dense: '22px',
-  normal: '24px',
-  relaxed: '30px',
-  extraRelaxed: '40px',
-} as const;
+  compact: 1.2,
+  tight: 1.25,
+  caption: 1.28571,
+  snug: 1.33333,
+  mono: 1.42857,
+  text: 1.5,
+} as const satisfies Record<FontLineHeightKey, number>;
 
 export const Typography = {
   H1: {
-    // "Roboto" 32px/40px 500
     medium: {
-      fontFamily: FontFamily.primary,
+      fontFamily: 'primary',
       fontSize: FontSize.extraExtraExtraLarge,
       fontWeight: FontWeight.medium,
-      lineHeight: LineHeight.extraRelaxed,
+      lineHeight: LineHeight.tight,
     },
   },
   H2: {
-    // "Roboto" 24px/30px 500
     medium: {
-      fontFamily: FontFamily.primary,
+      fontFamily: 'primary',
       fontSize: FontSize.extraExtraLarge,
       fontWeight: FontWeight.medium,
-      lineHeight: LineHeight.relaxed,
+      lineHeight: LineHeight.tight,
     },
   },
   H3: {
-    // "Roboto" 20px/24px 400
     regular: {
-      fontFamily: FontFamily.primary,
+      fontFamily: 'primary',
       fontSize: FontSize.extraLarge,
       fontWeight: FontWeight.regular,
-      lineHeight: LineHeight.normal,
+      lineHeight: LineHeight.compact,
     },
-    // "Roboto" 20px/24px 500
     medium: {
-      fontFamily: FontFamily.primary,
+      fontFamily: 'primary',
       fontSize: FontSize.extraLarge,
       fontWeight: FontWeight.medium,
-      lineHeight: LineHeight.normal,
+      lineHeight: LineHeight.compact,
     },
   },
   H4: {
-    // "Roboto" 18px/24px 400
     regular: {
-      fontFamily: FontFamily.primary,
+      fontFamily: 'primary',
       fontSize: FontSize.large,
       fontWeight: FontWeight.regular,
-      lineHeight: LineHeight.normal,
+      lineHeight: LineHeight.snug,
     },
-    // "Roboto" 18px/24px 500
     medium: {
-      fontFamily: FontFamily.primary,
+      fontFamily: 'primary',
       fontSize: FontSize.large,
       fontWeight: FontWeight.medium,
-      lineHeight: LineHeight.normal,
+      lineHeight: LineHeight.snug,
     },
   },
   H5: {
-    // Roboto 16px/24px 400
     regular: {
-      fontFamily: FontFamily.primary,
+      fontFamily: 'primary',
       fontSize: FontSize.medium,
       fontWeight: FontWeight.regular,
-      lineHeight: LineHeight.normal,
+      lineHeight: LineHeight.text,
     },
-    // "Roboto" 16px/24px 500
     medium: {
-      fontFamily: FontFamily.primary,
+      fontFamily: 'primary',
       fontSize: FontSize.medium,
       fontWeight: FontWeight.medium,
-      lineHeight: LineHeight.normal,
+      lineHeight: LineHeight.text,
     },
-    // "Roboto" 16px/24px 700
     bold: {
-      fontFamily: FontFamily.primary,
+      fontFamily: 'primary',
       fontSize: FontSize.medium,
       fontWeight: FontWeight.bold,
-      lineHeight: LineHeight.normal,
+      lineHeight: LineHeight.text,
     },
   },
   Body: {
     extraSmall: {
-      // "Roboto" 12px/26px 400
       regular: {
-        fontFamily: FontFamily.primary,
+        fontFamily: 'primary',
         fontSize: FontSize.extraSmall,
         fontWeight: FontWeight.regular,
-        lineHeight: LineHeight.compact,
+        lineHeight: LineHeight.text,
       },
-      // "Roboto" 12px/26px 500
       medium: {
-        fontFamily: FontFamily.primary,
+        fontFamily: 'primary',
         fontSize: FontSize.extraSmall,
         fontWeight: FontWeight.medium,
-        lineHeight: LineHeight.compact,
+        lineHeight: LineHeight.text,
       },
     },
     small: {
-      // "Roboto" 14px/22px 400
       regular: {
-        fontFamily: FontFamily.primary,
+        fontFamily: 'primary',
         fontSize: FontSize.small,
         fontWeight: FontWeight.regular,
-        lineHeight: LineHeight.dense,
+        lineHeight: LineHeight.caption,
       },
-      // "Roboto" 14px/22px 500
       medium: {
-        fontFamily: FontFamily.primary,
+        fontFamily: 'primary',
         fontSize: FontSize.small,
         fontWeight: FontWeight.medium,
-        lineHeight: LineHeight.dense,
+        lineHeight: LineHeight.caption,
       },
-      // "Roboto" 14px/22px 700
       bold: {
-        fontFamily: FontFamily.primary,
+        fontFamily: 'primary',
         fontSize: FontSize.small,
         fontWeight: FontWeight.bold,
-        lineHeight: LineHeight.dense,
+        lineHeight: LineHeight.caption,
       },
     },
     medium: {
-      // "Roboto" 16px/24px 400
       regular: {
-        fontFamily: FontFamily.primary,
+        fontFamily: 'primary',
         fontSize: FontSize.medium,
         fontWeight: FontWeight.regular,
-        lineHeight: LineHeight.normal,
+        lineHeight: LineHeight.text,
       },
-      // "Roboto" 16px/24px 500
       medium: {
-        fontFamily: FontFamily.primary,
+        fontFamily: 'primary',
         fontSize: FontSize.medium,
         fontWeight: FontWeight.medium,
-        lineHeight: LineHeight.normal,
+        lineHeight: LineHeight.text,
       },
-      // "Roboto" 16px/24px 700
       bold: {
-        fontFamily: FontFamily.primary,
+        fontFamily: 'primary',
         fontSize: FontSize.medium,
         fontWeight: FontWeight.bold,
-        lineHeight: LineHeight.normal,
+        lineHeight: LineHeight.text,
       },
     },
   },
   Code: {
-    // "Roboto Mono" 14px/20px 400
     regular: {
-      fontFamily: FontFamily.monospace,
+      fontFamily: 'monospace',
       fontSize: FontSize.small,
       fontWeight: FontWeight.regular,
-      lineHeight: LineHeight.tight,
+      lineHeight: LineHeight.mono,
     },
   },
-} as const;
+} as const satisfies Readonly<TypographyMap>;
 
 export type TypographyType = Readonly<typeof Typography>;
