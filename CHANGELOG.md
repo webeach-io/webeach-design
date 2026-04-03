@@ -1,3 +1,10 @@
+## [0.2.1](https://github.com/webeach-io/webeach-design/compare/v0.2.0...v0.2.1) (2026-04-03)
+
+
+### Bug Fixes
+
+* **colors:** invert dark mode palette so semantic variables match theme context ([52655f9](https://github.com/webeach-io/webeach-design/commit/52655f92b9bb613151dabceb04ec835d90efe723))
+
 # [0.2.0](https://github.com/webeach-io/webeach-design/compare/v0.1.0...v0.2.0) (2026-04-03)
 
 
