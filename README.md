@@ -46,7 +46,7 @@ It provides a standardized foundation for building visually consistent user inte
 ## 📦 Installation
 
 ```sh
-yarn add @webeach-io/design
+pnpm add @webeach-io/design
 ```
 
 ---
@@ -596,7 +596,7 @@ These types help you maintain type safety when working with token keys or token 
 Compiles the codebase and generates the production-ready output in the `dist` directory.
 
 ```sh
-yarn run build
+pnpm build
 ```
 
 ### Watch mode
@@ -604,7 +604,7 @@ yarn run build
 Watches for file changes and rebuilds automatically.
 
 ```sh
-yarn run build:watch
+pnpm build:watch
 ```
 
 ### Generate assets
@@ -612,7 +612,7 @@ yarn run build:watch
 Generates color and gradient preview images for use in the `README.md`.
 
 ```sh
-yarn run generate:assets
+pnpm generate:assets
 ```
 
 ⚠️ Note: you need to run this manually whenever you update the color or gradient token sets.
@@ -659,7 +659,7 @@ Before publishing a new version, make sure to:
 4. Update the `README.md`:
 
 - All tables should be updated if any tokens related to colors, sizes, or typography were changed.
-- If color or gradient tokens were changed, also run `yarn run generate:assets` to regenerate the color preview images.
+- If color or gradient tokens were changed, also run `pnpm generate:assets` to regenerate the color preview images.
 
 ---
 
